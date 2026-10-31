@@ -1,88 +1,77 @@
-# ==========================================
-# Installment 4: The Tracker Makes Decisions
-# ==========================================
+# Installment 5: The Menu Comes Alive
+# Description: Interactive expense tracker with menu-driven choices and summary updates.
 
-def main():
-    # Banner
-    print("==========================================")
-    print("             EXPENSE TRACKER              ")
-    print("          Know where your money goes.     ")
-    print("==========================================")
+# Banner (prints ONCE at start)
+print("=" * 40)
+print("             EXPENSE TRACKER            ")
+print("       Know where your money goes.      ")
+print("=" * 40)
+print()
 
-    # Main Menu
+# Initial setup inputs (asked ONCE per run)
+name = input("What's your name? ")
+tax_percent = float(input("Tax rate %? "))
+budget = float(input("Your budget? "))
+print(f"Welcome, {name}!")
+
+# Variables initialization
+subtotal = 0.0
+count = 0
+
+# Main loop for menu navigation
+while True:
+    print()
     print("MAIN MENU")
-    print("  [1] Add an expense         (coming soon)")
-    print("  [2] View all expenses      (coming soon)")
-    print("  [3] Show total spent       (coming soon)")
-    print("  [4] Exit                   (coming soon)\n")
+    print("  [1] Add an expense")
+    print("  [2] View all expenses (coming soon)")
+    print("  [3] Show total spent")
+    print("  [4] Exit")
+    
+    choice = input("Choose 1-4: ")
+    
+    if choice == "1":
+        amount = float(input("Amount? "))
+        subtotal += amount
+        count += 1
+        
+        # Size message checks
+        if amount > 200:
+            print("  Huge expense - are you sure?")
+        elif amount > 100:
+            print("  Big expense.")
+        elif amount > 50:
+            print("  Moderate expense.")
+        else:
+            print("  Small expense.")
 
-    # Name Prompt
-    name = input("What's your name? ")
-    print(f"Welcome, {name}! Let's log two expenses.\n")
+    elif choice == "2":
+        print("Coming soon: the tracker can't remember each item yet.")
 
-    # Expense 1 Input and Size Message
-    item1 = input("First expense? ")
-    amount1 = float(input("Amount? "))
-    if amount1 > 200:
-        print("  Huge expense - are you sure?")
-    elif amount1 > 100:
-        print("  Big expense.")
-    elif amount1 > 50:
-        print("  Moderate expense.")
+    elif choice == "3":
+        tax_amount = subtotal * (tax_percent / 100)
+        grand_total = subtotal + tax_amount
+        left = budget - grand_total
+        over = grand_total - budget
+
+        print(f"  Expenses:     {count}")
+        print(f"  Subtotal:     ${subtotal:.1f}")
+        print(f"  Tax ({tax_percent:.1f}%):   ${tax_amount:.1f}")
+        print(f"  Grand total:  ${grand_total:.1f}")
+
+        # Verdict logic
+        if grand_total > budget:
+            print(f"Over budget by ${over:.1f}!")
+        elif grand_total > (budget * 0.9):
+            print(f"Careful: only ${left:.1f} left.")
+        else:
+            print(f"Within budget. ${left:.1f} left.")
+
+    elif choice == "4":
+        print(f"Goodbye, {name}!")
+        print("-" * 40)
+        print("Made by: Eddy Gieronn Ugali  |  Installment 5")
+        print("=" * 40)
+        break
+
     else:
-        print("  Small expense.")
-
-    # Expense 2 Input and Size Message
-    item2 = input("Second expense? ")
-    amount2 = float(input("Amount? "))
-    if amount2 > 200:
-        print("  Huge expense - are you sure?")
-    elif amount2 > 100:
-        print("  Big expense.")
-    elif amount2 > 50:
-        print("  Moderate expense.")
-    else:
-        print("  Small expense.")
-
-    # Two-Big Warning
-    if amount1 > 100 and amount2 > 100:
-        print("  Two big expenses in a row - slow down!")
-
-    # Tax & Budget Inputs
-    tax_rate = float(input("Tax rate %? "))
-    budget = float(input("Your budget? "))
-
-    # Calculations
-    subtotal = amount1 + amount2
-    average = subtotal / 2
-    tax = subtotal * (tax_rate / 100)
-    grand_total = subtotal + tax
-    over_budget = grand_total > budget
-    left_in_budget = budget - grand_total
-
-    # Summary
-    print("\n----------------------------------------")
-    print("SUMMARY")
-    print(f"  - {item1 + ':':<10} ${amount1:.1f}")
-    print(f"  - {item2 + ':':<10} ${amount2:.1f}")
-    print(f"Subtotal:       ${subtotal:.1f}")
-    print(f"Average:        ${average:.1f}")
-    print(f"Tax ({tax_rate:.1f}%):     ${tax:.1f}")
-    print(f"Grand total:    ${grand_total:.1f}")
-
-    # Verdict Logic
-    if over_budget:
-        over_amount = grand_total - budget
-        print(f"Over budget by ${over_amount:.1f}!")
-    elif grand_total > (0.90 * budget):
-        print(f"Careful: only ${left_in_budget:.1f} left.")
-    else:
-        print(f"Within budget. ${left_in_budget:.1f} left.")
-
-    print("----------------------------------------")
-
-    # Footer
-    print(f"Made by: Eddy Gieronn P. Ugali  |   Installment 4\n")
-
-if __name__ == "__main__":
-    main()
+        print("Please choose 1, 2, 3 or 4.")
